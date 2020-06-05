@@ -1,27 +1,31 @@
 <template>
-    <div>
-
-        <table>
-            <tr>
-                <th><i>id</i></th>
-                <th>Название</th>
-                <th>Цена <p>(за месяц)</p></th>
-                <th>Кол-во<p>минут</p><p>(в месяц)</p></th>
-                <th>Кол-во<p>смс</p><p>(в месяц)</p></th>
-                <th><p>Интернет</p>трафик<p>(в месяц)</p></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <td><i>({{ tariff.id }})</i></td>
-                <td>{{ tariff.title }}</td>
-                <td>{{ tariff.price }}</td>
-                <td>{{ tariff.calls }}</td>
-                <td>{{ tariff.sms }}</td>
-                <td>{{ tariff.traffic }}</td>
-                <td><input type="button" value="Изменить" @click="edit" />
-                <td><input type="button" value="Удалить" @click="del" /></td>
-            </tr>
+    <div class="orangered-form">
+        <div class="main-block">
+            <div class="main-block__section">
+                <h2>{{ tariff.title }}</h2>
+            </div>
+            <div class="main-block__section">
+                <button class="favorite styled main-block__button main-block__button_margin-bottom" @click="edit">Редактировать</button>
+                <button class="fa fa-trash main-block__button" @click="del"></button>
+            </div>
+        </div>
+        <table class="card tariff-card">
+            <thead class="bottom-line">
+                <tr>
+                    <th>Стоимость</th>
+                    <th>Минуты</th>
+                    <th>СМС</th>
+                    <th><p>Интернет</p></th>
+                </tr>
+            </thead>
+            <tbody class="bottom-line">
+                <tr>
+                    <td>{{ tariff.price }} руб</td>
+                    <td>{{ tariff.calls }} мин</td>
+                    <td>{{ tariff.sms }} шт</td>
+                    <td>{{ tariff.traffic }} Гб</td>
+                </tr>
+            </tbody>
         </table><br/>
     </div>
 </template>
@@ -41,5 +45,6 @@
 </script>
 
 <style>
+
 
 </style>

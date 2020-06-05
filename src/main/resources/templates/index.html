@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
     <meta charset="UTF-8">
-    <title>Sarafan</title>
+    <title>Billing</title>
     <script th:inline="javascript">
         var frontendData = [[${frontendData}]];
     </script>
 </head>
 <body>
-<h3>Sarafan</h3>
+
+<h1>Мониторинг тарифов</h1>
 <div id="app"></div>
 <script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
 </body>

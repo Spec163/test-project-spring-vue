@@ -1,11 +1,11 @@
 <template>
     <div>
-        <input type="text" placeholder="Write something" v-model="title" />
-        <input type="text" placeholder="Write price" v-model="price" />
-        <input type="text" placeholder="Write calls" v-model="calls" />
-        <input type="text" placeholder="Write sms" v-model="sms" />
-        <input type="text" placeholder="Write traffic" v-model="traffic" />
-        <input type="button" value="Save" @click="save" />
+        <p><input type="text" placeholder="Введите название тарифа" v-model="title" /></p>
+        <p><input type="text" placeholder="Введите стоимость" v-model="price" /></p>
+        <p><input type="text" placeholder="Введите кол-во минут разговора" v-model="calls" /></p>
+        <p><input type="text" placeholder="Введите кол-во СМС" v-model="sms" /></p>
+        <p><input type="text" placeholder="Введите интернет кол-во трафика" v-model="traffic" /></p>
+        <p><input class="favorite styled-add" type="button" value="Добавить" @click="save" /></p>
     </div>
 </template>
 
