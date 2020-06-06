@@ -16,10 +16,10 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    private final TariffRepository tariffRepository;
-
     @Value("${spring.profiles.active}")
     private String profile;
+
+    private final TariffRepository tariffRepository;
 
     @Autowired
     public MainController(TariffRepository tariffRepository) {

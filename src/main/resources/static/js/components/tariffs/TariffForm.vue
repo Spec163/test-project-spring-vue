@@ -10,15 +10,7 @@
 </template>
 
 <script>
-    function getIndex(list, id) {
-        for (var i = 0; i < list.length; i++ ) {
-            if (list[i].id === id) {
-                return i
-            }
-        }
-
-        return -1
-    }
+    import { sendTariff } from 'util/ws'
 
     export default {
         props: ['tariffs', 'tariffAttr'],
@@ -44,10 +36,16 @@
         },
         methods: {
             save() {
-                const tariff = { title: this.title, price: this.price,
-                    calls: this.calls, sms: this.sms, traffic: this.traffic}
+                sendTariff({id: this.id, title: this.title, price: this.price,
+                    calls: this.calls, sms: this.sms, traffic: this.traffic})
+                this.title = ''
+                this.price = ''
+                this.calls = ''
+                this.sms = ''
+                this.traffic = ''
+                this.id = ''
 
-                if (this.id) {
+                /*if (this.id) {
                     this.$resource('/tariff{/id}').update({id: this.id}, tariff).then(result =>
                         result.json().then(data => {
                             const index = getIndex(this.tariffs, data.id)
@@ -71,7 +69,7 @@
                             this.traffic = ''
                         })
                     )
-                }
+                }*/
             }
         }
     }

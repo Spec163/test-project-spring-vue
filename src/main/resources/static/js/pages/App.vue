@@ -12,6 +12,8 @@
 
 <script>
     import TariffsList from 'components/tariffs/TariffList.vue'
+    import { addHandler } from 'util/ws'
+    import { getIndex } from 'util/collections'
 
     export default {
         components: {
@@ -22,8 +24,19 @@
                 tariffs: frontendData.tariffs,
                 profile: frontendData.profile
             }
+        },
+        created() {
+            addHandler(data => {
+                let index = getIndex(this.tariffs, data.id)
+                if (index > -1) {
+                    this.tariffs.splice(index, 1, data)
+                } else {
+                    this.tariffs.push(data)
+                }
+            })
         }
     }
+
 </script>
 
 <style>

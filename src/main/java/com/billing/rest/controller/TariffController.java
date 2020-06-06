@@ -5,6 +5,8 @@ import com.billing.rest.domain.Tariff;
 import com.billing.rest.repository.TariffRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,5 +49,11 @@ public class TariffController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Tariff tariff) {
         tariffRepository.delete(tariff);
+    }
+
+    @MessageMapping("/changeTariff")
+    @SendTo("/topic/activity")
+    public Tariff tariff(Tariff tariff) {
+        return tariffRepository.save(tariff);
     }
 }

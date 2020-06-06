@@ -4,10 +4,12 @@ h1 {
 }
 
 h2 {
-    font-family: "Oswald";
+    text-transform: uppercase;
+    font-family: "Arial";
     color: white;
     font-size: 24px;
     margin-left: 25px;
+    letter-spacing: 1px;
 }
 
 table {
