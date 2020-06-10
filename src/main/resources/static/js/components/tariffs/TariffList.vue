@@ -1,13 +1,13 @@
 <template>
-    <div style="position: relative; width: 300px;">
+    <v-layout align-content-space-around justify-start column>
         <tariff-form :tariffs="tariffs" :tariffAttr="tariff" />
-        <tariff-row v-for="tariff in tariffs"
+        <tariff-row v-for="tariff in sortedTariffs"
                      :key="tariff.id"
                      :tariff="tariff"
                      :editTariff="editTariff"
                      :deleteTariff="deleteTariff"
                      :tariffs="tariffs" />
-    </div>
+    </v-layout>
 </template>
 
 <script>
@@ -23,6 +23,11 @@
         data() {
             return {
                 tariff: null
+            }
+        },
+        computed: {
+            sortedTariffs() {
+                return this.tariffs.sort((a, b) => -(a.id - b.id))
             }
         },
         methods: {

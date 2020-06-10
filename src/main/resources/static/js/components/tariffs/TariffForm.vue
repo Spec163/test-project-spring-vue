@@ -1,12 +1,14 @@
 <template>
-    <div>
-        <p><input type="text" placeholder="Введите название тарифа" v-model="title" /></p>
-        <p><input type="text" placeholder="Введите стоимость" v-model="price" /></p>
-        <p><input type="text" placeholder="Введите кол-во минут разговора" v-model="calls" /></p>
-        <p><input type="text" placeholder="Введите кол-во СМС" v-model="sms" /></p>
-        <p><input type="text" placeholder="Введите интернет кол-во трафика" v-model="traffic" /></p>
-        <p><input class="favorite styled-add" type="button" value="Добавить" @click="save" /></p>
-    </div>
+    <v-layout row>
+        <v-text-field placeholder="Введите название тарифа" v-model="title" />
+        <v-text-field placeholder="Введите стоимость" v-model="price" />
+        <v-text-field placeholder="Введите кол-во минут разговора" v-model="calls" />
+        <v-text-field placeholder="Введите кол-во СМС" v-model="sms" />
+        <v-text-field placeholder="Введите интернет кол-во трафика" v-model="traffic" />
+        <p><v-btn @click="save" class="mx-2" fab dark color="red">
+            <v-icon dark>mdi-plus</v-icon>
+        </v-btn></p>
+    </v-layout>
 </template>
 
 <script>

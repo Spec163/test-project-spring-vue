@@ -1,33 +1,23 @@
 <template>
-    <div class="orangered-form">
-        <div class="main-block">
-            <div class="main-block__section">
-                <h2>{{ tariff.title }}</h2>
-            </div>
-            <div class="main-block__section">
-                <button class="favorite styled main-block__button main-block__button_margin-bottom" @click="edit">Редактировать</button>
-                <button class="fa fa-trash main-block__button" @click="del"></button>
-            </div>
-        </div>
-        <table class="card tariff-card">
-            <thead class="bottom-line">
-                <tr>
-                    <th>Стоимость</th>
-                    <th>Минуты</th>
-                    <th>СМС</th>
-                    <th><p>Интернет</p></th>
-                </tr>
-            </thead>
-            <tbody class="bottom-line">
-                <tr>
-                    <td>{{ tariff.price }} руб</td>
-                    <td>{{ tariff.calls }} мин</td>
-                    <td>{{ tariff.sms }} шт</td>
-                    <td>{{ tariff.traffic }} Гб</td>
-                </tr>
-            </tbody>
-        </table><br/>
-    </div>
+    <v-card class="my-2">
+        <v-card-title primary-title>
+            <h2>{{ tariff.title }}</h2>
+            <v-card-actions>
+                <v-btn @click="edit" class="ma-2" outlined small fab color="deep-purple accent-4">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn @click="del" small flat fab outlined color="deep-purple accent-4">
+                    <v-icon color="deep-purple accent-4">delete</v-icon>
+                </v-btn>
+            </v-card-actions>
+        </v-card-title>
+        <v-card-text>
+            {{ tariff.price }} руб
+                    {{ tariff.calls }} мин
+                    {{ tariff.sms }} смс
+                    {{ tariff.traffic }} Гб
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -42,6 +32,7 @@
             }
         }
     }
+
 </script>
 
 <style>

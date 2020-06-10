@@ -1,13 +1,33 @@
 <template>
-    <div>
-        <div v-if="!profile">Необходимо авторизоваться через
-            <a href="/login">Google</a>
+    <v-app>
+        <div>
+            <v-app-bar color="deep-purple accent-4" dense dark>
+
+                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+                <v-toolbar-title>Мониторинг тарифов</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <span v-if="profile" style="font-size: 24px">{{profile.name}}</span>
+                <v-btn v-if="profile" icon href="/logout">
+                    <v-icon>exit_to_app</v-icon>
+                </v-btn>
+            </v-app-bar>
+
+            <v-content>
+                <v-content>
+                    <v-container v-if="!profile">
+                        Необходимо авторизоваться через
+                        <a href="/login">Google</a>
+                    </v-container>
+                    <v-container v-if="profile">
+                        <tariffs-list :tariffs="tariffs" />
+                    </v-container>
+                </v-content>
+            </v-content>
         </div>
-        <div v-else>
-            <div>{{profile.name}}&nbsp;<a href="/logout">Выйти</a></div>
-            <tariffs-list :tariffs="tariffs" />
-        </div>
-    </div>
+    </v-app>
 </template>
 
 <script>
