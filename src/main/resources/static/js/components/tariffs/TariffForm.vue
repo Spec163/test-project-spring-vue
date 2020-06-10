@@ -1,5 +1,6 @@
 <template>
     <div>
+<!--    добавить правило ввода (не меньше 3 символов :rule) https://vuetifyjs.com/en/components/inputs/#inputs  -->
         <v-text-field label="Введите название тарифа" v-model="title" hide-details="auto" />
         <v-text-field label="Введите стоимость" v-model="price" hide-details="auto" />
         <v-text-field label="Введите кол-во минут разговора" v-model="calls" hide-details="auto" />
