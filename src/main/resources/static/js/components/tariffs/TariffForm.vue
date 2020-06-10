@@ -1,14 +1,12 @@
 <template>
-    <v-layout row>
-        <v-text-field placeholder="Введите название тарифа" v-model="title" />
-        <v-text-field placeholder="Введите стоимость" v-model="price" />
-        <v-text-field placeholder="Введите кол-во минут разговора" v-model="calls" />
-        <v-text-field placeholder="Введите кол-во СМС" v-model="sms" />
-        <v-text-field placeholder="Введите интернет кол-во трафика" v-model="traffic" />
-        <p><v-btn @click="save" class="mx-2" fab dark color="red">
-            <v-icon dark>mdi-plus</v-icon>
-        </v-btn></p>
-    </v-layout>
+    <div>
+        <v-text-field label="Введите название тарифа" v-model="title" hide-details="auto" />
+        <v-text-field label="Введите стоимость" v-model="price" hide-details="auto" />
+        <v-text-field label="Введите кол-во минут разговора" v-model="calls" hide-details="auto" />
+        <v-text-field label="Введите кол-во СМС" v-model="sms" hide-details="auto" />
+        <v-text-field label="Введите интернет кол-во трафика" v-model="traffic" hide-details="auto" />
+        <v-btn @click="save" class="mt-5 mb-8" block color="red" dark>Добавить тариф</v-btn>
+    </div>
 </template>
 
 <script>
@@ -26,6 +24,7 @@
                 id: ''
             }
         },
+
         watch: {
             tariffAttr(newVal, oldVal) {
                 this.title = newVal.title
