@@ -13,6 +13,7 @@
 <script>
     import TariffRow from 'components/tariffs/TariffRow.vue'
     import TariffForm from 'components/tariffs/TariffForm.vue'
+    import TariffsApi from 'api/tariffs'
 
     export default {
         props: ['tariffs'],
@@ -35,7 +36,7 @@
                 this.tariff = tariff
             },
             deleteTariff(tariff) {
-                this.$resource('/tariff{/id}').remove({id: tariff.id}).then(result => {
+                TariffsApi.remove(tariff.id).then(result => {
                     if (result.ok) {
                         this.tariffs.splice(this.tariffs.indexOf(tariff), 1)
                     }

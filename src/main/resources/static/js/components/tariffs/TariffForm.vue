@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import { sendTariff } from 'util/ws'
+    import tariffsApi from 'api/tariffs'
 
     export default {
         props: ['tariffs', 'tariffAttr'],
@@ -38,40 +38,36 @@
         },
         methods: {
             save() {
-                sendTariff({id: this.id, title: this.title, price: this.price,
-                    calls: this.calls, sms: this.sms, traffic: this.traffic})
+                const tariff = {id: this.id, title: this.title, price: this.price,
+                    calls: this.calls, sms: this.sms, traffic: this.traffic}
+
+
+                if (this.id) {
+                    tariffsApi.update(tariff).then(result =>
+                        result.json().then(data => {
+                            const index = this.tariffs.findIndex(item => item.id === data.id)
+                            this.tariffs.splice(index, 1, data)
+                        })
+                    )
+                } else {
+                    tariffsApi.add(tariff).then(result =>
+                        result.json().then(data => {
+                            const index = this.tariffs.findIndex(item => item.id === data.id)
+
+                            if (index > -1) {
+                                this.tariffs.splice(index, 1, data)
+                            } else {
+                                this.tariffs.push(data)
+                            }
+                        })
+                    )
+                }
                 this.title = ''
                 this.price = ''
                 this.calls = ''
                 this.sms = ''
                 this.traffic = ''
                 this.id = ''
-
-                /*if (this.id) {
-                    this.$resource('/tariff{/id}').update({id: this.id}, tariff).then(result =>
-                        result.json().then(data => {
-                            const index = getIndex(this.tariffs, data.id)
-                            this.tariffs.splice(index, 1, data)
-                            this.title = ''
-                            this.price = ''
-                            this.calls = ''
-                            this.sms = ''
-                            this.traffic = ''
-                            this.id = ''
-                        })
-                    )
-                } else {
-                    this.$resource('/tariff{/id}').save({}, tariff).then(result =>
-                        result.json().then(data => {
-                            this.tariffs.push(data)
-                            this.title= ''
-                            this.price = ''
-                            this.calls = ''
-                            this.sms = ''
-                            this.traffic = ''
-                        })
-                    )
-                }*/
             }
         }
     }

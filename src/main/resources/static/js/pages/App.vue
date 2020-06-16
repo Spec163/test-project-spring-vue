@@ -3,7 +3,7 @@
         <div>
             <v-app-bar color="deep-purple accent-4" dense dark>
 
-                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                <v-app-bar-nav-icon v-if="profile"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>Мониторинг тарифов</v-toolbar-title>
 
@@ -33,7 +33,6 @@
 <script>
     import TariffsList from 'components/tariffs/TariffList.vue'
     import { addHandler } from 'util/ws'
-    import { getIndex } from 'util/collections'
 
     export default {
         components: {
@@ -47,11 +46,25 @@
         },
         created() {
             addHandler(data => {
-                let index = getIndex(this.tariffs, data.id)
-                if (index > -1) {
-                    this.tariffs.splice(index, 1, data)
+                if (data.objectType === 'TARIFF'){
+                    const index = this.tariffs.findIndex(item => item.id === data.body.id)
+                    switch (data.eventType) {
+                        case 'CREATE':
+                        case 'UPDATE':
+                            if (index > -1) {
+                                this.tariffs.splice(index, 1, data.body)
+                            } else {
+                                this.tariffs.push(data.body)
+                            }
+                            break
+                        case 'REMOVE':
+                            this.tariffs.splice(index, 1)
+                            break
+                        default:
+                            console.error(`Event type unknown! "${data.eventType}"`)
+                    }
                 } else {
-                    this.tariffs.push(data)
+                    console.error(`Event or Object type is unknown! "${datadata.objectType}"`)
                 }
             })
         }
