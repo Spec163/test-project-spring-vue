@@ -16,7 +16,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    @Value("${spring.profiles.active}")
+    @Value("${spring.profiles.active:prod}")
     private String profile;
 
     private final TariffRepository tariffRepository;

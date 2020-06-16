@@ -32,7 +32,7 @@
                             <td>{{ tariff.price }} руб</td>
                             <td>{{ tariff.calls }} мин</td>
                             <td>{{ tariff.sms }} смс</td>
-                            <td>{{ tariff.traffic }} Гб</td>
+                            <td>{{ tariff.internet }} Гб</td>
                         </tr>
                         </tbody>
                     </template>
@@ -43,14 +43,17 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
+
     export default {
-        props: ['tariff', 'editTariff', 'deleteTariff', 'tariffs'],
+        props: ['tariff', 'editTariff'],
         methods: {
+            ...mapActions(['removeTariffAction']),
             edit() {
                 this.editTariff(this.tariff)
             },
             del() {
-                this.deleteTariff(this.tariff)
+                this.removeTariffAction(this.tariff)
             }
         }
     }

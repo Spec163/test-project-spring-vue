@@ -22,7 +22,7 @@
                         <a href="/login">Google</a>
                     </v-container>
                     <v-container v-if="profile">
-                        <tariffs-list :tariffs="tariffs" />
+                        <tariffs-list />
                     </v-container>
                 </v-content>
             </v-content>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+    import { mapState, mapMutations } from 'vuex'
     import TariffsList from 'components/tariffs/TariffList.vue'
     import { addHandler } from 'util/ws'
 
@@ -38,27 +39,20 @@
         components: {
             TariffsList
         },
-        data() {
-            return {
-                tariffs: frontendData.tariffs,
-                profile: frontendData.profile
-            }
-        },
+        computed: mapState(['profile']),
+        methods: mapMutations(['addTariffMutation', 'updateTariffMutation', 'removeTariffMutation']),
         created() {
             addHandler(data => {
                 if (data.objectType === 'TARIFF'){
-                    const index = this.tariffs.findIndex(item => item.id === data.body.id)
                     switch (data.eventType) {
                         case 'CREATE':
+                            this.addTariffMutation(data.body)
+                            break
                         case 'UPDATE':
-                            if (index > -1) {
-                                this.tariffs.splice(index, 1, data.body)
-                            } else {
-                                this.tariffs.push(data.body)
-                            }
+                            this.updateTariffMutation(data.body)
                             break
                         case 'REMOVE':
-                            this.tariffs.splice(index, 1)
+                            this.removeTariffMutation(data.body)
                             break
                         default:
                             console.error(`Event type unknown! "${data.eventType}"`)

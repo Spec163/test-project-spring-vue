@@ -1,22 +1,19 @@
 <template>
     <v-layout align-content-space-around justify-start column>
-        <tariff-form :tariffs="tariffs" :tariffAttr="tariff" />
-        <tariff-row v-for="tariff in sortedTariffs"
-                     :key="tariff.id"
+        <tariff-form :tariffAttr="tariff" />
+        <tariff-row v-for="(tariff, index) in sortedTariffs"
+                     :key="`tariff.id - ${index}`"
                      :tariff="tariff"
-                     :editTariff="editTariff"
-                     :deleteTariff="deleteTariff"
-                     :tariffs="tariffs" />
+                     :editTariff="editTariff" />
     </v-layout>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import TariffRow from 'components/tariffs/TariffRow.vue'
     import TariffForm from 'components/tariffs/TariffForm.vue'
-    import TariffsApi from 'api/tariffs'
 
     export default {
-        props: ['tariffs'],
         components: {
             TariffRow,
             TariffForm
@@ -26,21 +23,10 @@
                 tariff: null
             }
         },
-        computed: {
-            sortedTariffs() {
-                return this.tariffs.sort((a, b) => -(a.id - b.id))
-            }
-        },
+        computed: mapGetters(['sortedTariffs']),
         methods: {
             editTariff(tariff) {
                 this.tariff = tariff
-            },
-            deleteTariff(tariff) {
-                TariffsApi.remove(tariff.id).then(result => {
-                    if (result.ok) {
-                        this.tariffs.splice(this.tariffs.indexOf(tariff), 1)
-                    }
-                })
             }
         }
     }

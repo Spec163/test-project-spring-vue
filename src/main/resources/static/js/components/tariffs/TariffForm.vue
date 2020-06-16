@@ -5,23 +5,23 @@
         <v-text-field label="Введите стоимость" v-model="price" hide-details="auto" />
         <v-text-field label="Введите кол-во минут разговора" v-model="calls" hide-details="auto" />
         <v-text-field label="Введите кол-во СМС" v-model="sms" hide-details="auto" />
-        <v-text-field label="Введите интернет кол-во трафика" v-model="traffic" hide-details="auto" />
+        <v-text-field label="Введите кол-во интернет трафика" v-model="internet" hide-details="auto" />
         <v-btn @click="save" class="mt-5 mb-8" block color="red" dark>Добавить тариф</v-btn>
     </div>
 </template>
 
 <script>
-    import tariffsApi from 'api/tariffs'
+    import { mapActions } from 'vuex'
 
     export default {
-        props: ['tariffs', 'tariffAttr'],
+        props: ['tariffAttr'],
         data() {
             return {
                 title: '',
                 price: '',
                 calls: '',
                 sms: '',
-                traffic: '',
+                internet: '',
                 id: ''
             }
         },
@@ -32,41 +32,27 @@
                 this.price = newVal.price
                 this.calls = newVal.calls
                 this.sms = newVal.sms
-                this.traffic = newVal.traffic
+                this.internet = newVal.internet
                 this.id = newVal.id
             }
         },
         methods: {
+            ...mapActions(['addTariffAction', 'updateTariffAction']),
             save() {
                 const tariff = {id: this.id, title: this.title, price: this.price,
-                    calls: this.calls, sms: this.sms, traffic: this.traffic}
+                    calls: this.calls, sms: this.sms, internet: this.internet}
 
 
                 if (this.id) {
-                    tariffsApi.update(tariff).then(result =>
-                        result.json().then(data => {
-                            const index = this.tariffs.findIndex(item => item.id === data.id)
-                            this.tariffs.splice(index, 1, data)
-                        })
-                    )
+                    this.updateTariffAction(tariff)
                 } else {
-                    tariffsApi.add(tariff).then(result =>
-                        result.json().then(data => {
-                            const index = this.tariffs.findIndex(item => item.id === data.id)
-
-                            if (index > -1) {
-                                this.tariffs.splice(index, 1, data)
-                            } else {
-                                this.tariffs.push(data)
-                            }
-                        })
-                    )
+                    this.addTariffAction(tariff)
                 }
                 this.title = ''
                 this.price = ''
                 this.calls = ''
                 this.sms = ''
-                this.traffic = ''
+                this.internet = ''
                 this.id = ''
             }
         }

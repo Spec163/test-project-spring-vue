@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-@ToString(of = {"id", "title", "price", "calls", "sms", "traffic"})
+@ToString(of = {"id", "title", "price", "calls", "sms", "internet"})
 @EqualsAndHashCode(of = {"id"})
 public class Tariff {
     @Id
@@ -28,7 +28,7 @@ public class Tariff {
     @JsonView(Views.IdInfo.class)
     private String sms;
     @JsonView(Views.IdInfo.class)
-    private String traffic;
+    private String internet;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -76,12 +76,12 @@ public class Tariff {
         this.sms = sms;
     }
 
-    public String getTraffic() {
-        return traffic;
+    public String getInternet() {
+        return internet;
     }
 
-    public void setTraffic(String traffic) {
-        this.traffic = traffic;
+    public void setInternet(String internet) {
+        this.internet = internet;
     }
 
     public LocalDateTime getCreationDate() {
