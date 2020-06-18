@@ -10,7 +10,7 @@ export default new Vuex.Store({
         profile: frontendData.profile
     },
     getters: {
-        sortedTariffs: state => state.tariffs.sort((a, b) => -(a.id - b.id))
+        sortedTariffs: state => (state.tariffs || []).sort((a, b) => -(a.id - b.id))
     },
     mutations: {
         addTariffMutation(state, tariff) {

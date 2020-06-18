@@ -1,11 +1,13 @@
 <template>
-    <v-layout align-content-space-around justify-start column>
-        <tariff-form :tariffAttr="tariff" />
-        <tariff-row v-for="(tariff, index) in sortedTariffs"
-                     :key="`tariff.id - ${index}`"
-                     :tariff="tariff"
-                     :editTariff="editTariff" />
-    </v-layout>
+    <v-container>
+        <v-layout align-content-space-around justify-start column>
+            <tariff-form :tariffAttr="tariff" />
+            <tariff-row v-for="(tariff, index) in sortedTariffs"
+                        :key="`tariff.id - ${index}`"
+                        :tariff="tariff"
+                        :editTariff="editTariff" />
+        </v-layout>
+    </v-container>
 </template>
 
 <script>

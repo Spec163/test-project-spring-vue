@@ -1,46 +1,57 @@
 <template>
     <v-app>
         <div>
-            <v-app-bar color="deep-purple accent-4" dense dark>
+            <!--    или <v-app-bar>     -->
+            <v-app-bar app color="deep-purple accent-4" dense dark>
 
-                <v-app-bar-nav-icon v-if="profile"></v-app-bar-nav-icon>
+                <v-toolbar-title class="font-size">Мониторинг тарифов</v-toolbar-title>
 
-                <v-toolbar-title>Мониторинг тарифов</v-toolbar-title>
-
+                <v-btn text v-if="profile" class="font-size"
+                       :disabled="$route.path === '/'"
+                        @click="showTariffs">
+                    Tariffs
+                </v-btn>
                 <v-spacer></v-spacer>
 
-                <span v-if="profile" style="font-size: 24px">{{profile.name}}</span>
-                <v-btn v-if="profile" icon href="/logout">
-                    <v-icon>exit_to_app</v-icon>
+                <v-btn text v-if="profile" class="font-size"
+                       :disabled="$route.path === '/profile'"
+                       @click="showProfile">
+                    {{profile.name}}
                 </v-btn>
-            </v-app-bar>
+                <v-btn v-if="profile" icon href="/logout">
+                    <v-icon>mdi-export</v-icon>
+                </v-btn>
 
-            <v-content>
-                <v-content>
-                    <v-container v-if="!profile">
-                        Необходимо авторизоваться через
-                        <a href="/login">Google</a>
-                    </v-container>
-                    <v-container v-if="profile">
-                        <tariffs-list />
-                    </v-container>
-                </v-content>
-            </v-content>
+                <template v-slot:extension v-if="profile">
+                    <v-tabs align-with-title>
+                        <v-tab @click="showTariffs">Tariffs</v-tab>
+                        <v-tab @click="showProfile">Profile</v-tab>
+                    </v-tabs>
+                </template>
+            </v-app-bar>
         </div>
+        <v-content>
+            <router-view></router-view>
+        </v-content>
     </v-app>
 </template>
 
 <script>
     import { mapState, mapMutations } from 'vuex'
-    import TariffsList from 'components/tariffs/TariffList.vue'
     import { addHandler } from 'util/ws'
+    import router from "../router/router";
 
     export default {
-        components: {
-            TariffsList
-        },
         computed: mapState(['profile']),
-        methods: mapMutations(['addTariffMutation', 'updateTariffMutation', 'removeTariffMutation']),
+        methods: {
+            ...mapMutations(['addTariffMutation', 'updateTariffMutation', 'removeTariffMutation']),
+            showTariffs() {
+                this.$router.push('/')
+            },
+            showProfile() {
+                this.$router.push('/profile')
+            }
+        },
         created() {
             addHandler(data => {
                 if (data.objectType === 'TARIFF'){
@@ -61,11 +72,24 @@
                     console.error(`Event or Object type is unknown! "${datadata.objectType}"`)
                 }
             })
+        },
+        // Неавторизованного пользователя перекидывает на /auth
+        beforeMount() {
+            if (!this.profile) {
+                this.$router.replace('/auth')
+            }
         }
     }
 
 </script>
 
-<style>
+<style scoped>
+    .font-size {
+        font-size: 110%;
+    }
+
+    .navigate-btn {
+        color: #6200ea;
+    }
 
 </style>

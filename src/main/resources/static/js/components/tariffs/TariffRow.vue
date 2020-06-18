@@ -1,6 +1,6 @@
 <template>
-    <v-card class="my-2 text-settings" width="1200px">
-        <v-content class="yellow darken-3 black--text">
+    <v-card class="my-2 text-settings" width="1050px">
+        <v-content class="yellow darken-3 black--text pt-8">
             <div class="main-block">
                 <v-card-title primary-title>
                     <h2>{{ tariff.title }}</h2>
@@ -17,7 +17,7 @@
             </div>
             <v-card-text>
 
-                <v-simple-table height="130px" class="yellow darken-3 black--text title">
+                <v-simple-table height="120px" class="yellow darken-3 black--text title">
                     <template v-slot:default>
                         <thead>
                         <tr>
@@ -66,7 +66,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
+        padding: 0 22px;
     }
 
     .text-settings {
